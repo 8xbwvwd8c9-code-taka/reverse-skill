@@ -39,7 +39,65 @@ foreach ($hint in $hints) {
         $scope = Join-Path $tmp 'route-scope.md'
         if (-not (Test-Path -LiteralPath $scope)) { Bad "router produced no scope for: $hint"; continue }
         $text = Get-Content -LiteralPath $scope -Raw -Encoding UTF8
-        if ($text -match '(?m)^primary_id:\s*R46\s*$' -or $text -match '(?m)^primary:\s*R46\s*$') {
+        if ($text -match '(?m)^-\s*primary:\s*R46\s*
+            Ok "R46 route: $hint"
+        } else {
+            Bad "route is not R46: $hint"
+        }
+    } catch {
+        Bad ("router failed: " + $_.Exception.Message)
+    } finally {
+        Remove-Item -LiteralPath $tmp -Recurse -Force -ErrorAction SilentlyContinue
+    }
+}
+
+$required = @(
+    'SKILL.md',
+    'references\authority-contract.md',
+    'scripts\init-l850-case.ps1',
+    'scripts\start-l850-re.ps1',
+    'scripts\check-argus-status.ps1',
+    'scripts\run-l850-bounded.ps1',
+    'scripts\bounded-capstone.py',
+    'scripts\import-offline-evidence.ps1',
+    'scripts\verify-l850-evidence.py'
+)
+foreach ($rel in $required) {
+    $p = Join-Path $skillRoot $rel
+    if (Test-Path -LiteralPath $p) { Ok "artifact $rel" } else { Bad "missing $rel" }
+}
+
+if (-not $StaticOnly) {
+    try {
+        $startArgs = @('-NoProfile','-ExecutionPolicy','Bypass','-File',$startScript)
+        if ($WorkspaceRoot) { $startArgs += @('-WorkspaceRoot',$WorkspaceRoot) }
+        $out = & powershell.exe @startArgs 2>&1
+        $joined = $out -join [Environment]::NewLine
+        if ($joined -match 'STATUS=READY_FOR_L850_RE') { Ok 'mandatory static tool gate ready' }
+        else { Bad ('start-l850-re not ready: ' + ($out -join '; ')) }
+    } catch { Bad ("start-l850-re failed: " + $_.Exception.Message) }
+
+    try {
+        $argusArgs = @('-NoProfile','-ExecutionPolicy','Bypass','-File',$argusScript)
+        if ($WorkspaceRoot) { $argusArgs += @('-WorkspaceRoot',$WorkspaceRoot) }
+        $out = & powershell.exe @argusArgs 2>&1
+        $joined = $out -join [Environment]::NewLine
+        if ($joined -match 'ARGUS_PACKAGE_STATUS=') { Ok 'Argus status probe completed' }
+        else { Bad ('Argus status probe missing fields: ' + ($out -join '; ')) }
+    } catch { Bad ("Argus status probe failed: " + $_.Exception.Message) }
+}
+
+Write-Host '=== L850 SMOKE SUMMARY ==='
+Write-Host ("STATIC_ONLY={0}" -f [bool]$StaticOnly)
+Write-Host ("FAIL={0}" -f $fail.Count)
+if ($fail.Count -gt 0) {
+    $fail | ForEach-Object { Write-Host ("ERROR=" + $_) -ForegroundColor Red }
+    Write-Host 'STATUS=FAIL'
+    exit 1
+}
+Write-Host 'STATUS=PASS'
+exit 0
+) {
             Ok "R46 route: $hint"
         } else {
             Bad "route is not R46: $hint"
