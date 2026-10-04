@@ -405,12 +405,23 @@ function Get-ReverseToolCatalog {
             )
         }
         [pscustomobject]@{
+            Name = 'argus-mcp'
+            Skill = 'l850-client-re'
+            Purpose = 'L850/850C 唯读运行时内存证据 MCP（项目固定共享工具）'
+            VersionArgs = @()
+            Fallbacks = @(
+                [pscustomobject]@{ Type = 'directory'; Value = 'I:\L共通工具\argus_mcp_reverse-skill' }
+            )
+        }
+        [pscustomobject]@{
             Name = 'analyzeHeadless'
-            Skill = 'reverse-engineering'
-            Purpose = 'Ghidra 无头分析（免费 IDA 替代）'
+            Skill = 'l850-client-re'
+            Purpose = 'Ghidra 无头分析；L850 优先使用已验证的 C:\Tools\850-re 安装'
             VersionArgs = @()
             Fallbacks = @(
                 [pscustomobject]@{ Type = 'command'; Value = 'analyzeHeadless' },
+                [pscustomobject]@{ Type = 'path'; Value = 'C:\Tools\850-re\ghidra\ghidra_12.1.4_PUBLIC\support\analyzeHeadless.bat' },
+                [pscustomobject]@{ Type = 'path'; Value = 'C:\Tools\850-re\ghidra\ghidra_12.1.3_PUBLIC\support\analyzeHeadless.bat' },
                 [pscustomobject]@{ Type = 'path'; Value = (Join-Path $userProfile 'Tools\ghidra\support\analyzeHeadless.bat') },
                 [pscustomobject]@{ Type = 'path'; Value = (Join-Path $userProfile 'Tools\ghidra\ghidra_11.3_PUBLIC\support\analyzeHeadless.bat') }
             )
