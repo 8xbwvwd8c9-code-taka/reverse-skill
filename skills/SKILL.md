@@ -30,6 +30,7 @@ description: Routes reverse engineering, exploitation, penetration testing, malw
 
 | 模块 | 目录 | 适用场景 |
 |------|------|---------|
+| **L850 / 850C 客戶端逆向** | `l850-client-re/` | Lin.bin2、AutoHunt、Helper、850Launcher；強制 bounded Ghidra + exact Capstone + Argus 唯讀 runtime evidence + server/client cross-proof |
 | **通用逆向** | `reverse-engineering/` | GDB / Frida / angr / Unicorn / Qiling / 反分析对抗 / 全语言平台逆向 / CTF 模式库 |
 | **APK 逆向** | `apk-reverse/` | Android APK 解包、jadx 反编译、smali 修改、Frida Hook、重打包签名安装 |
 | **.NET / C# 逆向** | `dotnet-reverse/` | 托管 PE 逆向、dnSpyEx + de4dot 脱混淆（ConfuserEx/SmartAssembly/Babel）、IL patch、Sharp* 红队工具分析、dnSpy MCP 联动 |
