@@ -27,6 +27,32 @@ if (-not $SkipHashValidation) {
 $ghidra = Resolve-ReverseToolSpec -Name 'analyzeHeadless'
 $python = Resolve-ReverseToolSpec -Name 'python'
 $argus = Resolve-ReverseToolSpec -Name 'argus-mcp'
+$argusStatusScript = Join-Path $PSScriptRoot 'check-argus-status.ps1'
+$argusRuntimeStatus = 'UNKNOWN'
+$argusServerStatus = 'UNKNOWN'
+$argusTargetStatus = 'UNKNOWN'
+if (Test-Path -LiteralPath $argusStatusScript) {
+    try {
+        $null = & $argusStatusScript -WorkspaceRoot $WorkspaceRoot
+        $argusStatusPath = Join-Path $WorkspaceRoot 'l850-argus-status.json'
+        if (Test-Path -LiteralPath $argusStatusPath) {
+            $argusState = Get-Content -LiteralPath $argusStatusPath -Raw -Encoding UTF8 | ConvertFrom-Json
+            $argusServerStatus = [string]$argusState.argus_server_process_status
+            $argusTargetStatus = [string]$argusState.target_process_status
+            if (-not $argus.Available) {
+                $argusRuntimeStatus = 'BLOCKED_ARGUS_PACKAGE_UNAVAILABLE'
+            } elseif ($argusTargetStatus -eq 'NO_TARGET_PROCESS') {
+                $argusRuntimeStatus = 'BLOCKED_NO_TARGET_PROCESS'
+            } elseif ($argusServerStatus -eq 'PROCESS_DETECTED') {
+                $argusRuntimeStatus = 'PACKAGE_AND_PROCESS_DETECTED'
+            } else {
+                $argusRuntimeStatus = 'PACKAGE_READY_SERVER_NOT_DETECTED_TARGET_PRESENT'
+            }
+        }
+    } catch {
+        $argusRuntimeStatus = 'STATUS_PROBE_FAILED'
+    }
+}
 
 $capstoneAvailable = $false
 $capstoneVersion = $null
@@ -55,8 +81,11 @@ $toolAudit = [ordered]@{
     capstone_version = $capstoneVersion
     python_path = $python.ResolvedPath
     argus_required_for_runtime_blockers = $true
-    argus_available = [bool]$argus.Available
+    argus_package_available = [bool]$argus.Available
     argus_path = $argus.ResolvedPath
+    argus_runtime_status = $argusRuntimeStatus
+    argus_server_process_status = $argusServerStatus
+    argus_target_process_status = $argusTargetStatus
     whole_image_analysis = $false
     memory_write = $false
     packet_send = $false
@@ -87,8 +116,10 @@ if (-not $argus.Available) {
     Write-Output 'ARGUS_MCP_STATUS=BLOCKED_ARGUS_PACKAGE_UNAVAILABLE'
 }
 else {
-    Write-Output "ARGUS_MCP_STATUS=PACKAGE_READY"
+    Write-Output "ARGUS_MCP_STATUS=$argusRuntimeStatus"
     Write-Output "ARGUS_MCP_PATH=$($argus.ResolvedPath)"
+    Write-Output "ARGUS_SERVER_PROCESS_STATUS=$argusServerStatus"
+    Write-Output "ARGUS_TARGET_STATUS=$argusTargetStatus"
 }
 
 Write-Output "TOOL_AUDIT=$auditPath"
