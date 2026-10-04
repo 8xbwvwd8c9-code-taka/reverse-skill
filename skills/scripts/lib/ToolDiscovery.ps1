@@ -410,7 +410,7 @@ function Get-ReverseToolCatalog {
             Purpose = 'L850/850C 唯读运行时内存证据 MCP（项目固定共享工具）'
             VersionArgs = @()
             Fallbacks = @(
-                [pscustomobject]@{ Type = 'directory'; Value = 'I:\L共通工具\argus_mcp_reverse-skill' }
+                [pscustomobject]@{ Type = 'directory'; Value = 'I:\Lineage-tools\argus_mcp_reverse-skill' }
             )
         }
         [pscustomobject]@{

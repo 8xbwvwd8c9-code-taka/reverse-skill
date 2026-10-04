@@ -17,7 +17,7 @@
     "report": "20261004-client-re-unified-offline.md"
   },
   "argus": {
-    "defaultPath": "I:\\L共通工具\\argus_mcp_reverse-skill",
+    "defaultPath": "I:\\Lineage-tools\\argus_mcp_reverse-skill",
     "readOnly": true
   },
   "anchors": {

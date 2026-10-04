@@ -160,7 +160,7 @@ Probe MUST：
 預設路徑：
 
 ```text
-I:\L共通工具\argus_mcp_reverse-skill
+I:\Lineage-tools\argus_mcp_reverse-skill
 ```
 
 Argus 用於 runtime-only blocker：
