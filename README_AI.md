@@ -177,6 +177,31 @@ This allows the relative paths in `routing.md`, such as `../CTF-Sandbox-Orchestr
 
 ---
 
+## L850 / 850C 專案模式
+
+此 fork 內建 L850/850C 專用 PRIMARY：`skills/l850-client-re/SKILL.md`。
+
+當任務包含 `850C`、`L850`、`L1JTW8.5`、`Lin.bin2`、`850Launcher` 或 `PotionBridge850` 時，router 會優先選擇 R46，而不是一般 Ghidra/R0。
+
+Windows 專案入口：
+
+```powershell
+powershell -File skills\scripts\master-route.ps1 -Hint "850C Lin.bin2 Ghidra AutoHunt reverse"
+powershell -ExecutionPolicy Bypass -File skills\l850-client-re\scripts\start-l850-re.ps1
+```
+
+第二個命令會：
+
+1. 驗證權威 client/runtime-image SHA256。
+2. 建立 `C:\Tools\850-re-unified-offline` 工作區。
+3. 發現 Ghidra / Python / Capstone / Argus。
+4. 寫出 `l850-tool-audit.json`。
+5. 缺少 Ghidra/Capstone 時 fail-closed；Argus 沒有 runtime process 時只阻塞 runtime-only 子項，不阻塞可繼續的 static RE。
+
+L850 模式禁止 whole-image analysis、memory write、packet send、input injection 與 game action；PROVEN 需要 bounded Ghidra + focused Capstone，必要時加 server/protocol cross-proof 與 Argus read-only runtime evidence。
+
+---
+
 ## Quick Start
 
 ### If You Only Want to Put the Skill Pack in Place First
