@@ -7,6 +7,7 @@
 
 | 模块 | 摘要 |
 |------|------|
+| [l850-client-re](l850-client-re/SKILL.md) | Dedicated L850/850C Lineage 8.5 client RE workflow: bounded Ghidra, exact Capstone, Argus read-only runtime evidence, server/client cross-proof, frozen ABI authority, and offline rescue. |
 | [api-security](api-security/SKILL.md) | Use for authorized security assessment of REST, GraphQL, WebSocket, or SOAP APIs, including discovery, authentication, authorization, rate-limit, and CI/CD t... |
 | [apk-reverse](apk-reverse/SKILL.md) | 在 CLI 环境下做 Android APK 逆向时使用。适用于 APK 解包、Java 反编译、smali 修改、重打包、Frida 动态 Hook，以及按需切换到 so/native 分析。优先使用本机已安装的 jadx、apktool、frida、adb、ida-reverse、radare2。 |
 | [attack-chain](attack-chain/SKILL.md) | Use for authorized multi-stage attack-path planning and orchestration when a task spans reconnaissance, initial access, privilege escalation, lateral movemen... |
@@ -81,6 +82,7 @@ skills/hardware-security/SKILL.md/
 skills/ida-reverse/SKILL.md/
 skills/identity-federation/SKILL.md/
 skills/js-reverse/SKILL.md/
+skills/l850-client-re/SKILL.md/
 skills/llm-security/SKILL.md/
 skills/macos-reverse/SKILL.md/
 skills/malware-analysis/SKILL.md/
