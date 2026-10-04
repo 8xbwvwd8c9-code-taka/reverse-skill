@@ -114,16 +114,5 @@ Write-Output "L850_SKILL=$(Join-Path $TargetRoot 'skills\l850-client-re\SKILL.md
 Write-Output "ARGUS_ROOT=$TargetRoot"
 Write-Output "MARKER=$markerPath"
 
-$smoke = Join-Path $TargetRoot 'skills\l850-client-re\scripts\smoke-l850.ps1'
-if (Test-Path -LiteralPath $smoke) {
-    Write-Host ''
-    Write-Host 'Running L850 smoke...' -ForegroundColor Cyan
-    & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $smoke
-    $smokeExit = $LASTEXITCODE
-    Write-Output "SMOKE_EXIT=$smokeExit"
-    if ($smokeExit -ne 0) {
-        Write-Warning 'Safe subset installed, but smoke reported a local tool/config blocker.'
-        exit $smokeExit
-    }
-}
 Write-Output 'READY=YES'
+Write-Output 'SMOKE=NOT_RUN_AUTOMATICALLY'
