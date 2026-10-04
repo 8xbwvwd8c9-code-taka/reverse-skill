@@ -8,6 +8,16 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
+
+function Get-L850RelativePath([string]$BasePath, [string]$FullPath) {
+    $base = [IO.Path]::GetFullPath($BasePath).TrimEnd('\\') + '\\'
+    $full = [IO.Path]::GetFullPath($FullPath)
+    if (-not $full.StartsWith($base,[StringComparison]::OrdinalIgnoreCase)) {
+        throw "Path is outside base: $FullPath"
+    }
+    return $full.Substring($base.Length)
+}
+
 if (-not (Test-Path -LiteralPath $SourceRoot)) { throw "Offline source missing: $SourceRoot" }
 if (-not (Test-Path -LiteralPath (Join-Path $TargetRepo '.git'))) { throw "TargetRepo is not a Git worktree: $TargetRepo" }
 
@@ -35,14 +45,14 @@ $files = @($files | Sort-Object FullName -Unique)
 
 $manifest = New-Object System.Collections.Generic.List[object]
 foreach ($f in $files) {
-    $relative = [IO.Path]::GetRelativePath($SourceRoot,$f.FullName)
+    $relative = Get-L850RelativePath $SourceRoot $f.FullName
     $out = Join-Path $dest $relative
     New-Item -ItemType Directory -Force -Path (Split-Path -Parent $out) | Out-Null
     Copy-Item -LiteralPath $f.FullName -Destination $out -Force
     $hash = (Get-FileHash -LiteralPath $out -Algorithm SHA256).Hash.ToUpperInvariant()
     [void]$manifest.Add([pscustomobject]@{
         source = $f.FullName
-        imported = [IO.Path]::GetRelativePath($TargetRepo,$out)
+        imported = Get-L850RelativePath $TargetRepo $out
         sha256 = $hash
         size = $f.Length
     })
