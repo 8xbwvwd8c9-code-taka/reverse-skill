@@ -51,10 +51,7 @@ New-Item -ItemType Directory -Force -Path $skillsRoot | Out-Null
 
 # Only L850-related directories. Deliberately excludes pentest-tools / malware / exploit content.
 $allowedDirs = @(
-    'skills/l850-client-re',
-    'skills/ghidra-reverse',
-    'skills/protocol-reverse',
-    'skills/binary-diff'
+    'skills/l850-client-re'
 )
 
 $allowedFiles = @(
