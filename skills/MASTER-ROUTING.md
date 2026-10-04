@@ -78,6 +78,7 @@ python3 skills/case-review/scripts/review_case.py work/<case> --verify-hashes --
 
 | ID | 条件 | PRIMARY |
 |----|------|---------|
+| **R46** | L850 / 850C / Lin.bin2 / L1JTW8.5 / 850Launcher / PotionBridge850 | `l850-client-re/` |
 | **R4** | DSL VM / fireye / 自定义 opcode VM | `reverse-engineering/dsl-vm-reverse/` |
 | **R1** | APK / smali / jadx / apktool | `apk-reverse/` |
 | **R2** | IPA / iOS / Objection / MobSF / mobile | `mobile-reverse/` |

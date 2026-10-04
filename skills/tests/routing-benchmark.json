@@ -7,6 +7,26 @@
   },
   "cases": [
     {
+      "hint": "850C Lin.bin2 用 Ghidra 逆向 UseItem 與 AutoHunt",
+      "expect": "R46",
+      "quick": true
+    },
+    {
+      "hint": "L1JTW8.5 Helper PotionBridge850 反編譯 client ABI",
+      "expect": "R46",
+      "quick": false
+    },
+    {
+      "hint": "Lineage 8.5 850Launcher OwnedSkill range lifecycle reverse",
+      "expect": "R46",
+      "quick": false
+    },
+    {
+      "hint": "850C protocol reverse Ghidra MCP inventory HP MP",
+      "expect": "R46",
+      "quick": false
+    },
+    {
       "hint": "decompile APK with jadx apktool smali",
       "expect": "R1",
       "quick": true

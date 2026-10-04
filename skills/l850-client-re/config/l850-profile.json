@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "1.0",
+  "project": "L850",
+  "client": {
+    "defaultPath": "I:\\8.50c客服端\\Lin.bin2",
+    "sha256": "FAB9DB971F22BF91D06BB36485AAAABFFAEA795BB0DCC22D2EB4039227F54AD4",
+    "imageBase": "0x00400000"
+  },
+  "runtimeImage": {
+    "defaultPath": "I:\\8.50c客服端\\runtime-scan\\Lin.bin2.pid24640.runtime-image.bin",
+    "sha256": "DEB116644000DB00BF2A54101AE6F923C89C073FBE3F1CA6FDF231CD2A21FCB3"
+  },
+  "workspace": {
+    "offlineRoot": "C:\\Tools\\850-re-unified-offline",
+    "evidenceDir": "evidence",
+    "scriptsDir": "scripts",
+    "report": "20261004-client-re-unified-offline.md"
+  },
+  "argus": {
+    "defaultPath": "I:\\L共通工具\\argus_mcp_reverse-skill",
+    "readOnly": true
+  },
+  "anchors": {
+    "useItem": "0x00AEEFB0",
+    "castSelf": "0x00F906B0",
+    "castTargeted": "0x00F908B0",
+    "attack": "0x00B9B6F0",
+    "move": "0x00B9BFF0",
+    "repairOwner": "0x00AEE840",
+    "repairCallback": "0x00544EA0",
+    "commonSubmit": "0x00B594B0",
+    "ownedSkillService": "0x01713508",
+    "ownedSkillGetter": "0x005AC3A0",
+    "ownedSkillPredicate": "0x00F8E650",
+    "hpHandler": "0x00A98ED0",
+    "mpHandler": "0x00A9B470",
+    "rangeReaderA": "0x00543CB0",
+    "rangeReaderB": "0x00543CCB",
+    "rangeSelectorSite": "0x00BA891D",
+    "rangeTable": "0x0793254C",
+    "rangeCount": "0x0159E864"
+  },
+  "safety": {
+    "wholeImageGhidra": false,
+    "wholeImageCapstone": false,
+    "memoryWrite": false,
+    "packetSend": false,
+    "inputInjection": false,
+    "gameAction": false
+  }
+}

@@ -318,6 +318,15 @@
         { "must": "binary.?ninja|binaryninja|\\bbinja\\b|binary[_-]ninja[_-]mcp|hlil|mlil", "note": "Binary Ninja GUI, IL, Python API, MCP, or localhost HTTP integration" }
       ]
     },
+    "R46": {
+      "label": "L850 / 850C Client RE",
+      "skill": "l850-client-re/SKILL.md",
+      "keywords": [
+        { "must": "\\b850c\\b|\\bl850\\b|l1jtw8\\.?5|lineage.?8\\.?5|lin\\.bin2|potionbridge850|850launcher", "note": "L850 project identifiers route directly to the project-specific RE workflow" },
+        { "must": "autohunt|auto.?hunt|helper|輔助程式|自動狩獵", "mustAll": ["850c|l850|l1jtw8|lineage.?8|lin\\.bin2|potionbridge850|850launcher"], "note": "AutoHunt/Helper only route here with an L850 project identifier" },
+        { "must": "ownedskill|useitem|class.?code|inventory|hp.?mp|range|lifecycle", "mustAll": ["850c|l850|lin\\.bin2"], "note": "Known L850 ABI work with explicit project context" }
+      ]
+    },
     "R0": {
       "label": "General reverse-engineering",
       "skill": "reverse-engineering/SKILL.md",
@@ -329,7 +338,7 @@
     }
   },
   "priority": [
-    "R4", "R1", "R2", "R3", "R30", "R31", "R33", "R5", "R9", "R21",
+    "R46", "R4", "R1", "R2", "R3", "R30", "R31", "R33", "R5", "R9", "R21",
     "R22", "R45", "R6", "R7", "R8", "R34", "R28", "R17", "R16", "R18", "R24",
     "R37", "R23", "R35", "R25", "R44", "R36", "R29", "R38", "R32", "R26", "R27",
     "R10", "R11", "R12", "R13", "R14", "R15", "R19", "R40", "R20", "R39", "R41", "R0"
