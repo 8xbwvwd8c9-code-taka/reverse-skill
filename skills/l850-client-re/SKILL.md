@@ -332,6 +332,30 @@ powershell -ExecutionPolicy Bypass -File .\skills\l850-client-re\scripts\install
 
 安裝器只替換／備份 `skills\`，不刪除 Argus 原始檔。
 
+### Defender-safe minimal install
+
+When Windows Defender blocks generic security content from the full reverse-skill repository, use:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\install-integrated-safe-subset.ps1
+```
+
+This installer downloads only:
+
+```text
+skills/l850-client-re/
+skills/config/routing.json
+skills/scripts/master-route.ps1
+skills/scripts/lib/WorkRoot.ps1
+skills/scripts/lib/ToolDiscovery.ps1
+skills/MASTER-ROUTING.md
+skills/SKILL.md
+skills/INDEX.md
+skills/routing.md
+```
+
+It intentionally does **not** download generic pentest/malware/exploit payload material. Optional generic reverse-engineering modules can remain outside this integrated Argus root; L850 operation does not depend on them.
+
 ## 專案執行工具
 
 ### 一鍵 smoke
