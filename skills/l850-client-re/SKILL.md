@@ -302,6 +302,74 @@ REJECTED
 
 不得用模糊的 `PARTIAL` 取代已知的 blocker 類型。
 
+## 專案執行工具
+
+### 一鍵 smoke
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\smoke-l850.ps1
+```
+
+用途：
+
+- 驗證 R46 專案路由
+- 驗證 L850 profile/必要檔案
+- 執行 mandatory tool gate
+- 區分 Argus package / server process / target process 狀態
+
+只測 package 結構可用：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\smoke-l850.ps1 -StaticOnly
+```
+
+### bounded RE runner
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\run-l850-bounded.ps1 -VA 0x00AEEFB0
+```
+
+預設一定產出 hash-pinned Capstone bounded window。
+
+若已有隔離 Ghidra project，可同時要求 Ghidra `-noanalysis` bounded evidence：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\run-l850-bounded.ps1 \
+  -VA 0x00AEEFB0 \
+  -GhidraProjectDir "C:\Tools\850-re\projects" \
+  -GhidraProjectName "L850" \
+  -GhidraProgramName "Lin.bin2"
+```
+
+### Argus 狀態
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\check-argus-status.ps1
+```
+
+MUST 區分：
+
+```text
+package exists
+Argus server process detected
+850C target process detected
+runtime evidence actually available
+```
+
+不得以「資料夾存在」代替 runtime availability。
+
+### offline evidence 回填
+
+只允許回填到**乾淨、正確 branch 的隔離 worktree**：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\import-offline-evidence.ps1 \
+  -TargetRepo "C:\Tools\850-re\client-re-unified" \
+  -Commit -Push
+```
+
+dirty worktree 或 branch 不符時 MUST fail-closed。
+
 ## 381 / 880 migration
 
 當 hash-identifiable 381/880 binary/evidence 存在時 MAY 使用 `binary-diff` 方法遷移候選。
