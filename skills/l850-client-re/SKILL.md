@@ -302,6 +302,36 @@ REJECTED
 
 不得用模糊的 `PARTIAL` 取代已知的 blocker 類型。
 
+## 共用根目錄配置
+
+L850 reverse-skill 與 Argus MCP 預設共用同一個根目錄：
+
+```text
+I:\Lineage-tools\argus_mcp_reverse-skill
+```
+
+推薦佈局：
+
+```text
+I:\Lineage-tools\argus_mcp_reverse-skill\
+├─ <Argus 原始檔>
+├─ skills\
+│  ├─ l850-client-re\
+│  ├─ scripts\
+│  └─ ...
+└─ L850_REVERSE_SKILL_INSTALL.json
+```
+
+不要另外建立 `reverse-skill-L850` 目錄。
+
+若要把 reverse-skill checkout 併入既有 Argus 根目錄，執行：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\skills\l850-client-re\scripts\install-integrated-argus-root.ps1
+```
+
+安裝器只替換／備份 `skills\`，不刪除 Argus 原始檔。
+
 ## 專案執行工具
 
 ### 一鍵 smoke
