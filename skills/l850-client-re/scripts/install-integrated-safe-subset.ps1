@@ -45,9 +45,15 @@ if (-not (Test-Path -LiteralPath $TargetRoot)) {
 }
 
 $stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
-$backupRoot = Join-Path $TargetRoot ("L850-skills-backup-" + $stamp)
 $skillsRoot = Join-Path $TargetRoot 'skills'
+if (Test-Path -LiteralPath $skillsRoot) {
+    $wholeBackup = Join-Path $TargetRoot ("skills.backup-before-safe-l850-" + $stamp)
+    Move-Item -LiteralPath $skillsRoot -Destination $wholeBackup
+    Write-Output "SKILLS_BACKUP=$wholeBackup"
+}
 New-Item -ItemType Directory -Force -Path $skillsRoot | Out-Null
+
+$backupRoot = Join-Path $TargetRoot ("L850-path-backup-" + $stamp)
 
 # Only L850-related directories. Deliberately excludes pentest-tools / malware / exploit content.
 $allowedDirs = @(
