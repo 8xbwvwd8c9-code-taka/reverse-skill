@@ -14,8 +14,8 @@ metadata:
 
 1. `NOW`: 讀取 `references/authority-contract.md`，載入 L850 frozen authority 與證據分級。
 2. `NOW`: 讀取 `config/l850-profile.json`，不得自行猜測 client hash、runtime-image hash、image base 或核心 anchor。
-3. `NEXT`: 執行 `scripts/init-l850-case.ps1` 建立隔離 case/workspace 並驗證權威 SHA256。
-4. `NEXT`: 確認 Ghidra + Python/Capstone；缺工具時才依 package bootstrap 規則處理。Argus 使用既有本機路徑，不自動安裝第二份。
+3. `NEXT`: 執行 `scripts/start-l850-re.ps1`；它會先呼叫 case initializer 驗證權威 SHA256，再強制檢查 Ghidra、Python/Capstone、Argus package，輸出 `l850-tool-audit.json`。
+4. `NEXT`: 若 Ghidra/Capstone 缺失，依 package bootstrap/既有安裝規則處理；Argus 使用既有本機路徑，不自動安裝第二份。
 5. `ACT`: 從目前最高優先級未閉合項目開始，強制產生新的 Ghidra/Capstone 證據；遇 runtime-only blocker 且遊戲進程存在時，使用 Argus 唯讀驗證。
 
 ## 適用範圍
