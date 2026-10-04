@@ -11,7 +11,7 @@ $Headers = @{ 'User-Agent' = 'L850-safe-installer' }
 
 function Get-GitHubJson([string]$Path) {
     $escaped = ($Path -split '/' | ForEach-Object { [Uri]::EscapeDataString($_) }) -join '/'
-    $uri = "$ApiBase/$escaped?ref=$([Uri]::EscapeDataString($Ref))"
+    $uri = "$ApiBase/${escaped}?ref=$([Uri]::EscapeDataString($Ref))"
     return Invoke-RestMethod -UseBasicParsing -Headers $Headers -Uri $uri
 }
 
